@@ -1,10 +1,16 @@
 services:
   pyspark:
-    build: .
+    build: 
+      context: .
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
     container_name: pyspark
     volumes:
       - ./:/usr/app
-
+    profiles:
+      - app
+  
   database:
     image: postgres:17.4-alpine
     container_name: db
@@ -15,10 +21,23 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./scripts:/docker-entrypoint-initdb.d
+      - ./data:/usr/data
     ports:
       - "5432:5432"
     expose:
       - "5432"
+    profiles:
+      - db
+
+  test:
+    build:
+      context: .
+      target: test
+    container_name: test
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - test
 
 volumes:
   pgdata:
