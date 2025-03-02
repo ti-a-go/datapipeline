@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.dataframe import DataFrame
 import findspark
 
-from src.spark_service import spark
+from src.spark_session import spark
 
 
 findspark.init()

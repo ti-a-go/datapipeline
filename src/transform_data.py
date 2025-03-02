@@ -2,7 +2,7 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 
 from pyspark.sql.dataframe import DataFrame
-from pyspark.sql.functions import initcap, concat_ws, sum, count, max, col
+from pyspark.sql.functions import initcap, concat_ws, sum, count, col
 
 
 def capitalize_clients_name(df: DataFrame) -> DataFrame:

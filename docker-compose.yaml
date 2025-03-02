@@ -9,23 +9,37 @@ services:
     volumes:
       - ./:/usr/app
     profiles:
-      - app
+      - spark
   
-  database:
+  source-database:
     image: postgres:17.4-alpine
-    container_name: db
+    container_name: source-db
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./scripts:/docker-entrypoint-initdb.d
-      - ./data:/usr/data
+      - source_pgdata:/var/lib/postgresql/data
+      - ./scripts/source:/docker-entrypoint-initdb.d
+      - ./data/source:/usr/data
     ports:
       - "5432:5432"
-    expose:
-      - "5432"
+    profiles:
+      - db
+    
+  target-database:
+    image: postgres:17.4-alpine
+    container_name: target-db
+    environment:
+      POSTGRES_USER: ${TARGET_DATABASE_USER}
+      POSTGRES_PASSWORD: ${TARGET_DATABASE_PASSWORD}
+      POSTGRES_DB: ${TARGET_DATABASE_NAME}
+    volumes:
+      - target_pgdata:/var/lib/postgresql/data
+      - ./scripts/target:/docker-entrypoint-initdb.d
+      - ./data/target:/usr/data
+    ports:
+      - "5434:5432"
     profiles:
       - db
 
@@ -38,6 +52,17 @@ services:
       - ./:/usr/app
     profiles:
       - test
+  
+  preload:
+    build:
+      context: .
+      target: preload
+    container_name: preload
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - preload
 
 volumes:
-  pgdata:
+  source_pgdata:
+  target_pgdata:

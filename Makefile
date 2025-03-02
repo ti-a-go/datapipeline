@@ -1,35 +1,23 @@
-docker-up:
-	docker compose up
-
-docker-build:
-	docker compose up --build
-
-docker-down:
-	docker compose down
-
-docker-clear:
-	docker compose down -v
-
 spark-build:
-	docker compose up pyspark --build
+	docker compose --profile spark up --build
 
 spark-up:
-	docker compose up pyspark --force-recreate
+	docker compose --profile spark up --force-recreate
 
-spark-down:
-	docker compose down pyspark
-
-db-up:
-	docker compose up database -d
+db-up: preload
+	docker compose --profile db up --build -d
 
 db-down:
-	docker compose down database
+	docker compose --profile db down
 
 db-clear:
-	docker compose down -v database
+	docker compose --profile db down -v
 
 test-build:
 	docker compose --profile test up --build --force-recreate
 
 test:
-	docker compose --profile test up
+	docker compose --profile test up --force-recreate
+
+preload:
+	docker compose --profile preload up --force-recreate

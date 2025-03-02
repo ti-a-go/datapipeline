@@ -26,10 +26,10 @@ CREATE TABLE transacoes (
 );
 
 -- Criação da tabela de transações_temp
-CREATE TABLE transacoes_temp (
-    id INT PRIMARY KEY,
-    id_cliente INT,
-    id_produto INT,
-    quantidade INT,
-    data_transacao DATE
-);
+-- CREATE TABLE transacoes_temp (
+--     id INT PRIMARY KEY,
+--     id_cliente INT,
+--     id_produto INT,
+--     quantidade INT,
+--     data_transacao DATE
+-- );
