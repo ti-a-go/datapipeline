@@ -17,10 +17,10 @@ test:
 	docker compose --profile test up --force-recreate
 
 preload:
-	mkdir -p data && \
-	wget -P data https://github.com/magazord-plataforma/data_engineer_test/blob/master/cliente.csv \
-		https://github.com/magazord-plataforma/data_engineer_test/blob/master/produtos.csv \
-		https://github.com/magazord-plataforma/data_engineer_test/blob/master/transacoes_1.zip \
-		https://github.com/magazord-plataforma/data_engineer_test/blob/master/transacoes_2.zip \
-		https://github.com/magazord-plataforma/data_engineer_test/blob/master/transacoes_3.zip
+	mkdir -p -m +002 data && \
+	wget -P data https://raw.githubusercontent.com/magazord-plataforma/data_engineer_test/refs/heads/master/cliente.csv \
+		https://raw.githubusercontent.com/magazord-plataforma/data_engineer_test/refs/heads/master/produtos.csv \
+		https://github.com/magazord-plataforma/data_engineer_test/raw/refs/heads/master/transacoes_1.zip \
+		https://github.com/magazord-plataforma/data_engineer_test/raw/refs/heads/master/transacoes_2.zip \
+		https://github.com/magazord-plataforma/data_engineer_test/raw/refs/heads/master/transacoes_3.zip
 	docker compose --profile preload up --force-recreate

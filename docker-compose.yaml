@@ -100,7 +100,7 @@ services:
     volumes:
       - source_pgdata:/var/lib/postgresql/data
       - ./scripts/source:/docker-entrypoint-initdb.d
-      - ./data/source:/usr/data
+      - ./data:/usr/data
     ports:
       - "5432:5432"
     profiles:
