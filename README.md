@@ -43,6 +43,14 @@ make pipeline
 
 After that you can see the precessed data into the target database. You use a DB user interface like PGAdmin or DBeaver or just attach to the `target-db` Docker service, log into the database using `psql` with the `dev` user and query the data.
 
+### Unit test
+
+It's also possible to run [unit tests](./tests/test_data_transformation.py) for the Spark jobs.
+
+```sh
+make test
+```
+
 # How the pipeline is built
 
 It uses PySpark to parallelize data processing. In this project the parallelization used is the default one, but in a production environment it's possible to manage it to better performance, like the number of partitions used to process the data.
