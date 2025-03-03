@@ -4,8 +4,11 @@ spark-build:
 spark-up:
 	docker compose --profile spark up --force-recreate
 
+pipeline:
+	docker compose --profile pipeline up --force-recreate
+
 db-up: preload
-	docker compose --profile db up --build -d
+	docker compose --profile db up
 
 db-down:
 	docker compose --profile db down

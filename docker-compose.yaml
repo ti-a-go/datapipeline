@@ -1,16 +1,95 @@
 services:
-  pyspark:
+  pipeline:
     build: 
       context: .
+      target: pipeline
       args:
         - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
         - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
-    container_name: pyspark
+    container_name: pipeline
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - pipeline
+  
+  normalize:
+    build: 
+      context: .
+      target: normalize
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: normalize
     volumes:
       - ./:/usr/app
     profiles:
       - spark
   
+  revenue_by_client:
+    build: 
+      context: .
+      target: revenue_by_client
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: revenue_by_client
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - spark
+  
+  client_transactions:
+    build: 
+      context: .
+      target: client_transactions
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: client_transactions
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - spark
+  
+  purchased_products_by_client:
+    build: 
+      context: .
+      target: purchased_products_by_client
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: purchased_products_by_client
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - spark
+  
+  most_sold_products:
+    build: 
+      context: .
+      target: most_sold_products
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: most_sold_products
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - spark
+  
+  active_clients:
+    build: 
+      context: .
+      target: active_clients
+      args:
+        - JDBC_POSTGRES_DRIVER_FOLDER=${JDBC_POSTGRES_DRIVER_FOLDER}
+        - JDBC_POSTGRES_DRIVER_VERSION=${JDBC_POSTGRES_DRIVER_VERSION}
+    container_name: active_clients
+    volumes:
+      - ./:/usr/app
+    profiles:
+      - spark
+
   source-database:
     image: postgres:17.4-alpine
     container_name: source-db
