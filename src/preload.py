@@ -5,11 +5,11 @@ from spark_session import spark
 
 
 def preload():
-    clients: DataFrame = spark.read.options(header=True).csv("data/source/cliente.csv")
+    clients: DataFrame = spark.read.options(header=True).csv("data/cliente.csv")
 
     transactions_dfs = []
     for i in range(1, 4):
-        df = pd.read_csv(f"data/source/transacoes_{i}.zip")
+        df = pd.read_csv(f"data/transacoes_{i}.zip")
         transactions_dfs.append(df)
 
     transactions_dfs = pd.concat(transactions_dfs)
@@ -28,7 +28,7 @@ def preload():
     filtered_transactions = transactions.filter(
         ~transactions.id_cliente.isin(missing_client_ids)
     )
-    filtered_transactions.toPandas().to_csv("data/source/transacoes.csv", index=False)
+    filtered_transactions.toPandas().to_csv("data/transacoes.csv", index=False)
 
 
 if __name__ == "__main__":
