@@ -8,11 +8,13 @@ from data_io import save_data, load_products, load_transactions
 
 logger = logging.getLogger(__name__)
 
-logging.basicConfig(filename='logs/revenue_by_client.log',
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)03d %(name)s %(levelname)s %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
-                    level=logging.INFO)
+logging.basicConfig(
+    filename="logs/revenue_by_client.log",
+    filemode="a",
+    format="%(asctime)s,%(msecs)03d %(name)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.INFO,
+)
 
 
 def get_revenue_by_client(transactions: DataFrame, products: DataFrame) -> DataFrame:
@@ -32,9 +34,9 @@ def get_revenue_by_client(transactions: DataFrame, products: DataFrame) -> DataF
         sum("total").alias("receita_total")
     )
 
-if __name__ == '__main__':
-    start_time = time.time()
 
+if __name__ == "__main__":
+    start_time = time.time()
 
     transactions = load_transactions()
     products = load_products()
@@ -42,5 +44,4 @@ if __name__ == '__main__':
     save_data(revenue_by_client, "receita_cliente")
 
     execution_time = time.strftime("%M:%S", time.gmtime(time.time() - start_time))
-    logger.info(f'Execution time: {execution_time}')
-    
+    logger.info(f"Execution time: {execution_time}")

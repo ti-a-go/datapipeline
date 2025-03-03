@@ -1,13 +1,11 @@
 from data_io import load_clients, load_products, load_transactions, save_data
 from spark_session import spark
-from transform_data import (
-    get_revenue_by_client,
-    normalize_clients_name,
-    get_client_transactions_count,
-    get_most_purchased_products_by_client,
-    get_most_sold_product_in_period,
-    number_of_active_clients_in_past_months,
-)
+from normalize import normalize_clients_name
+from revenue_by_client import get_revenue_by_client
+from client_transactions import get_client_transactions_count
+from purchased_products_by_client import get_most_purchased_products_by_client
+from most_sold_products import get_most_sold_product_in_period
+from active_clients import number_of_active_clients_in_past_months
 
 
 def pipeline():

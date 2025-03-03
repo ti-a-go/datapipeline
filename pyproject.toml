@@ -1,0 +1,31 @@
+[project]
+name = "spam-eggs"
+version = "0.1.0"
+requires-python = ">= 3.12.3"
+dependencies = [
+  "pyspark==3.5.4",
+  "python-dotenv==1.0.1",
+  "findspark==2.0.1",
+]
+[project.optional-dependencies]
+dev = [
+  "pytest==8.3.4",
+  "black==25.1.0",
+  "Faker==36.1.1",
+]
+authors = [
+  {name = "Tiago Santos", email = "tiagosn03@gmail.com"},
+]
+maintainers = [
+  {name = "Tiago Santos", email = "tiagosn03@gmail.com"},
+]
+description = "Data pipeline using synthetic ecommerce data about clientes, products and transactions."
+readme = "README.md"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+
+[project.urls]
+Repository = "https://github.com/ti-a-go/datapipeline"

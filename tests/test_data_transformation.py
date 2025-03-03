@@ -1,12 +1,10 @@
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.functions import col
 
-from src.transform_data import (
-    normalize_clients_name,
-    get_revenue_by_client,
-    get_client_transactions_count,
-    get_most_purchased_products_by_client,
-)
+from src.normalize import normalize_clients_name
+from src.revenue_by_client import get_revenue_by_client
+from src.client_transactions import get_client_transactions_count
+from src.purchased_products_by_client import get_most_purchased_products_by_client
 from tests.fixtures import (
     clients,
     products,

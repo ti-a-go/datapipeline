@@ -1,10 +1,15 @@
+black==25.1.0
+click==8.1.8
 Faker==36.1.1
 findspark==2.0.1
 iniconfig==2.0.0
 joblib==1.4.2
+mypy-extensions==1.0.0
 numpy==1.26.4
 packaging==24.2
 pandas==2.2.3
+pathspec==0.12.1
+platformdirs==4.3.6
 pluggy==1.5.0
 py4j==0.10.9.7
 pyarrow==19.0.1
