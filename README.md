@@ -1,10 +1,8 @@
-# Title
-
-Description
-
 # How to run
 
 This project uses a Makefile to define some script responsible to run the docker services.
+
+First of all, rename the `example.env` file to `.env`. 
 
 ## Dependencies:
 
@@ -43,15 +41,19 @@ This script is responsible to create and run the service responsible for the dat
 make pipeline
 ```
 
+After that you can see the precessed data into the target database. You use a DB user interface like PGAdmin or DBeaver or just attach to the `target-db` Docker service, log into the database using `psql` with the `dev` user and query the data.
+
 # How the pipeline is built
 
 It uses PySpark to parallelize data processing. In this project the parallelization used is the default one, but in a production environment it's possible to manage it to better performance, like the number of partitions used to process the data.
 
 The pipeline is composed of **Spark jobs** that perform one data transformation:
-- normalize: concatenate `nome` + `sobrenome` and capitalize it. 
-- count the number of `transacoes` for each `cliente`
-- calculate the revenue for each `cliente`
-- etc
+- [normalize](./src/normalize.py): concatenate `nome` + `sobrenome` and capitalize it.
+- [count the number of `transacoes`](./src/client_transactions.py) for each `cliente`
+- calculate the [revenue for each `cliente`](./src/revenue_by_client.py)
+- [most purchased product by client](./src/purchased_products_by_client.py).
+- [most sold products](./src/most_sold_products.py) in a given period.
+- [number of active clients](./src/active_clients.py)
 
 # How to improve the pipeline
 
@@ -71,6 +73,6 @@ Some jobs can have multiple instances that can run in parallel to increase the p
 
 Others jobs need to be modified so they can be parallelized. It's the case of the job that calculates the revenue by clients. It's currently built to get all the data from the transactions table to make the calculation.
 
-In order to parallelize it, it's necessary firts to create another service to read from the clients table and to publish it in batches. Then, the spark job can read the published batches and get the data from the transactions table only for the clients present in the batch it's reading at the moment. In this case, a index on the `id_cliente` column at the table `transacoes` is a good choice to improve the search performance. This way it's possible to parallelize the spark job that read the published batches.
+In order to parallelize it, it's necessary firts to create another service to read from the clients table and to publish it in batches in a Kafka topc for example. Then, the spark job can read the published batches and get the data from the transactions table only for the clients present in the batch it's reading at the moment. In this case, a index on the `id_cliente` column at the table `transacoes` is a good choice to improve the search performance. This way it's possible to parallelize the spark job that read the published batches.
 
 The same approatch can be used for other spark jobs like the one that calculates the number of transactions by client and the one that finds the most purchased products by client.
